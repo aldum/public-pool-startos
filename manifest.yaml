@@ -26,6 +26,7 @@ main:
   args: []
   mounts:
     main: /data/.public-pool
+    db: /DB
   io-format: yaml
 
 health-checks: {}
@@ -50,6 +51,8 @@ dependencies:
 
 volumes:
   main:
+    type: data
+  db:
     type: data
 
 interfaces:
@@ -82,11 +85,12 @@ backup:
     args:
       - duplicity
       - create
-      - /mnt/backup
       - /data/.public-pool
+      - /DB
     mounts:
       BACKUP: /mnt/backup
       main: /data/.public-pool
+      db: /DB
   restore:
     type: docker
     image: compat
