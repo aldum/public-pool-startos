@@ -62,19 +62,30 @@ interfaces:
     tor-config:
       port-mapping:
         3333: "3333"
-        3334: "3334"
-    lan-config:
-      3333:
-        ssl: false
-        internal: 3333
-      3334:
-        ssl: false
-        internal: 3334
+    # lan-config:
+    #   3333:
+    #     ssl: false
+    #     internal: 3333
     ui: false
     protocols:
       - tcp
-      - http
+      # - http
       - json-rpc
+      - stratum
+  web:
+    name: PublicPool UI
+    description: Web interface
+    tor-config:
+      port-mapping:
+        80: "80"
+    lan-config:
+      443:
+        ssl: true
+        internal: 80
+    ui: true
+    protocols:
+      - tcp
+      - http
 
 backup:
   create:

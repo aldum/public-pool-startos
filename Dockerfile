@@ -1,5 +1,5 @@
 FROM sethforprivacy/public-pool:0859c58 AS backend
-FROM mempool/frontend:db286e5 AS frontend
+FROM sethforprivacy/public-pool-ui:db286e5 AS frontend
 FROM node:18.16.1-bookworm-slim AS runner
 
 USER root
@@ -8,16 +8,20 @@ ARG PLATFORM
 # aarch64 or x86_64
 ARG ARCH
 
-RUN apt update && \
-  apt install -y libstdc++6 yq
+RUN DEBIAN_FRONTEND=noninteractive apt update && \
+  apt install -y --no-install-recommends \
+  libstdc++6 yq caddy
 
+# backend
 COPY --from=backend public-pool /opt/public-pool
-COPY ./docker_entrypoint.sh /usr/local/bin/
 COPY ./assets/.env.template /root/
+# frontend
+COPY --from=frontend /var/www/html /var/www/html
+COPY ./assets/Caddyfile.template /root/
+
+COPY ./docker_entrypoint.sh /usr/local/bin/
 
 RUN chmod a+x /usr/local/bin/*.sh
-
-EXPOSE 3333 3334 8332
 
 ENTRYPOINT ["/usr/local/bin/docker_entrypoint.sh"]
 # CMD ["/bin/bash"]
