@@ -56,27 +56,14 @@ volumes:
     type: data
 
 interfaces:
-  stratum:
-    name: Stratum
-    description: Stratum interface
+  public-pool:
+    name: Public pool
+    description: |
+      Public pool interfaces
+      The web UI is available on LAN, the stratum interface is Tor-only.
     tor-config:
       port-mapping:
         3333: "3333"
-    # lan-config:
-    #   3333:
-    #     ssl: false
-    #     internal: 3333
-    ui: false
-    protocols:
-      - tcp
-      # - http
-      - json-rpc
-      - stratum
-  web:
-    name: PublicPool UI
-    description: Web interface
-    tor-config:
-      port-mapping:
         80: "80"
     lan-config:
       443:
@@ -86,6 +73,8 @@ interfaces:
     protocols:
       - tcp
       - http
+      - json-rpc
+      - stratum
 
 backup:
   create:
