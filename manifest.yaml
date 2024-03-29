@@ -58,17 +58,16 @@ volumes:
 interfaces:
   public-pool:
     name: Public pool
-    description: |
-      Public pool interfaces
-      The web UI is available on LAN, the stratum interface is Tor-only.
+    description: Web UI and stratum interface
     tor-config:
       port-mapping:
         3333: "3333"
         80: "80"
-    lan-config:
-      443:
-        ssl: true
-        internal: 80
+    # it's lying about the address, until that's sorted out, disabled
+    # lan-config:
+    #   443:
+    #     ssl: true
+    #     internal: 80
     ui: true
     protocols:
       - tcp
