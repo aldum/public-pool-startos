@@ -1,6 +1,6 @@
 id: pubpool
 title: PublicPool
-version: 0.0.1
+version: 0.0.2
 release-notes: test build
 license: MIT
 wrapper-repo: "https://github.com/aldum/pubpool-startos"
@@ -42,7 +42,7 @@ dependencies:
     version: ">=0.21.1.2 <28.0.0"
     requirement:
       type: "required"
-    description: Used for interfacing with the network
+    description: Used for interfacing with the bitcoin network
     config:
       check:
         type: script
@@ -98,8 +98,9 @@ backup:
     args:
       - duplicity
       - restore
-      - /mnt/backup
+      - /DB
       - /data/.public-pool
     mounts:
       BACKUP: /mnt/backup
       main: /data/.public-pool
+      db: /DB
