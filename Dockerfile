@@ -12,12 +12,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
   apt install -y --no-install-recommends \
   libstdc++6 yq caddy
 
-# backend
+COPY ./assets/* /root/
 COPY --from=backend public-pool /opt/public-pool
-COPY ./assets/.env.template /root/
-# frontend
 COPY --from=frontend /var/www/html /var/www/html
-COPY ./assets/Caddyfile.template /root/
 
 COPY ./docker_entrypoint.sh /usr/local/bin/
 
