@@ -34,6 +34,22 @@ else
     rm -f $CADDY_CONFIG
 fi
 
+# Properties Page
+
+TOR_ADDRESS=$(yq -r '.rpc-url' "$CONFIG_FILE")
+
+cat <<EOF > /root/start9/stats.yaml
+version: 2
+data:
+  Stratum URL:
+    type: string
+    value: "stratum+tcp://$TOR_ADDRESS:3333"
+    description: Address for miners
+    copyable: true
+    masked: false
+    qr: true
+EOF
+
 
 ### run
 /usr/local/bin/node /opt/public-pool/dist/main &

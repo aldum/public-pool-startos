@@ -2,13 +2,13 @@ import { types as T, compat } from "../deps.ts";
 
 export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
   "rpc-url": {
-    name: "Electrum Tor Address",
-    description: "The Tor address for the electrum interface.",
+    name: "Pool Tor Address",
+    description: "The Tor address of Public Pool.",
     type: "pointer",
     subtype: "package",
-    "package-id": "bitcoind",
+    "package-id": "pubpool",
     target: "tor-address",
-    interface: "bitcoind",
+    interface: "public-pool",
   },
   user: {
     type: "pointer",
