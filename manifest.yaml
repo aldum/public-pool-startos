@@ -1,6 +1,6 @@
 id: pubpool
 title: PublicPool
-version: 0.0.2
+version: 0.0.3
 release-notes: test build
 license: MIT
 wrapper-repo: "https://github.com/aldum/pubpool-startos"
@@ -84,11 +84,10 @@ backup:
     args:
       - duplicity
       - create
-      - /data/.public-pool
+      - /mnt/backup
       - /DB
     mounts:
       BACKUP: /mnt/backup
-      main: /data/.public-pool
       db: /DB
   restore:
     type: docker
@@ -98,9 +97,8 @@ backup:
     args:
       - duplicity
       - restore
+      - /mnt/backup
       - /DB
-      - /data/.public-pool
     mounts:
       BACKUP: /mnt/backup
-      main: /data/.public-pool
       db: /DB
