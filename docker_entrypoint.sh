@@ -2,13 +2,20 @@
 
 set -euo pipefail
 
+yq_get() {
+    KEY=$1
+    FILE=$2
+    yq -e ".$KEY" "$FILE"
+}
+
+MAINDIR="/data/.public-pool"
 
 ### backend
-CONFIG_FILE="/data/.public-pool/start9/config.yaml"
+CONFIG_FILE="$MAINDIR/start9/config.yaml"
 
-BITCOIN_RPC_USER=$(yq -r '.user' "$CONFIG_FILE")
+BITCOIN_RPC_USER="$(yq_get 'user' "$CONFIG_FILE")"
 export BITCOIN_RPC_USER
-BITCOIN_RPC_PASSWORD=$(yq -r '.password' "$CONFIG_FILE")
+BITCOIN_RPC_PASSWORD="$(yq_get 'password' "$CONFIG_FILE")"
 export BITCOIN_RPC_PASSWORD
 
 ENV_TEMPLATE="/root/.env.template"
@@ -34,11 +41,13 @@ else
     rm -f $CADDY_CONFIG
 fi
 
+
 # Properties Page
+PROP_FILE="$MAINDIR/start9/stats.yaml"
 
-TOR_ADDRESS=$(yq -r '.rpc-url' "$CONFIG_FILE")
+TOR_ADDRESS="$(yq_get 'rpc-url' "$CONFIG_FILE")"
 
-cat <<EOF > /root/start9/stats.yaml
+cat > $PROP_FILE <<EOF
 version: 2
 data:
   Stratum URL:
