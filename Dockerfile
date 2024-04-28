@@ -8,9 +8,12 @@ ARG PLATFORM
 # aarch64 or x86_64
 ARG ARCH
 
+ADD https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 /usr/bin/yq
+
 RUN DEBIAN_FRONTEND=noninteractive apt update && \
   apt install -y --no-install-recommends \
-  libstdc++6 yq caddy
+  libstdc++6 caddy && \
+  chmod +x /usr/bin/yq
 
 COPY ./assets/* /root/
 COPY --from=backend public-pool /opt/public-pool
