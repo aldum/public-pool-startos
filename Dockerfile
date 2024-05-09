@@ -12,12 +12,18 @@ ADD https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 /usr
 
 RUN DEBIAN_FRONTEND=noninteractive apt update && \
   apt install -y --no-install-recommends \
-  libstdc++6 caddy && \
-  chmod +x /usr/bin/yq
+  tini curl netcat-openbsd libstdc++6 \
+  caddy \
+  && chmod +x /usr/bin/yq
 
-COPY ./assets/* /root/
+# debug tools
+RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
+  vim net-tools procps less
+
 COPY --from=backend public-pool /opt/public-pool
 COPY --from=frontend /var/www/html /var/www/html
+
+COPY ./assets/* /root/
 
 COPY ./docker_entrypoint.sh /usr/local/bin/
 
