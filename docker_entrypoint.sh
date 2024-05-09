@@ -60,8 +60,5 @@ data:
 EOF
 
 
-### run
-/usr/local/bin/node /opt/public-pool/dist/main &
-exec caddy run --config $CADDY_CONFIG &
-
-wait -n
+chmod +x /root/pubpool-init.sh
+exec tini /root/pubpool-init.sh

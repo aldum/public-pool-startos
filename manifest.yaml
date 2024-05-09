@@ -1,6 +1,6 @@
 id: pubpool
 title: PublicPool
-version: 0.0.3
+version: 0.0.9
 release-notes: test build
 license: MIT
 wrapper-repo: "https://github.com/aldum/pubpool-startos"
