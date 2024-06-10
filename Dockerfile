@@ -8,13 +8,13 @@ ARG PLATFORM
 # aarch64 or x86_64
 ARG ARCH
 
-ADD https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 /usr/bin/yq
+ADD https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 /usr/local/bin/yq
 
 RUN DEBIAN_FRONTEND=noninteractive apt update && \
   apt install -y --no-install-recommends \
   tini curl netcat-openbsd libstdc++6 \
   caddy \
-  && chmod +x /usr/bin/yq
+  && chmod a+x /usr/local/bin/yq
 
 # debug tools
 RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
