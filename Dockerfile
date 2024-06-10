@@ -27,6 +27,7 @@ COPY ./assets/* /root/
 
 COPY ./docker_entrypoint.sh /usr/local/bin/
 
-RUN chmod a+x /usr/local/bin/*.sh
+RUN mv /root/check-rpc.sh /usr/local/bin/ && \
+  chmod a+x /usr/local/bin/*.sh
 
 ENTRYPOINT ["/usr/local/bin/docker_entrypoint.sh"]

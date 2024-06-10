@@ -29,7 +29,18 @@ main:
     db: /DB
   io-format: yaml
 
-health-checks: {}
+health-checks:
+  rpc:
+    name: RPC
+    success-message: The RPC server is ready for connections
+    type: docker
+    image: main
+    system: false
+    entrypoint: check-rpc.sh
+    args: []
+    mounts: {}
+    io-format: yaml
+    inject: true
 
 config:
   get:
