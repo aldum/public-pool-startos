@@ -1,4 +1,4 @@
-import { setupManifest } from "@start9labs/start-sdk";
+import { setupManifest } from "@start9labs/start-sdk"
 
 export const manifest = setupManifest({
   id: "pubpool",
@@ -37,4 +37,4 @@ export const manifest = setupManifest({
     stop: null,
   },
   dependencies: {},
-});
+})

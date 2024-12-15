@@ -1,9 +1,9 @@
-import { sdk } from './sdk'
-import { exposedStore } from './store'
-import { setDependencies } from './dependencies'
-import { setInterfaces } from './interfaces'
-import { versions } from './versions'
-import { actions } from './actions'
+import { sdk } from "./sdk"
+import { exposedStore } from "./store"
+import { setDependencies } from "./dependencies"
+import { setInterfaces } from "./interfaces"
+import { versions } from "./versions"
+import { actions } from "./actions"
 // import { utils } from '@start9labs/start-sdk'
 // import { setPrimaryUrl } from './actions/set-primary-url'
 

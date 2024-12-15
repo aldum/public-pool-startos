@@ -1,5 +1,5 @@
-import { sdk } from "./sdk";
-import { stratPort } from "./utils";
+import { sdk } from "./sdk"
+import { stratPort } from "./utils"
 
 export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   // const uiMulti = sdk.host.multi(effects, "ui-multi");
@@ -25,10 +25,10 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   // return [httpReceipt]
 
   // Stratum
-  const rpcMulti = sdk.host.multi(effects, "rpc");
+  const rpcMulti = sdk.host.multi(effects, "rpc")
   const stratOrigin = await rpcMulti.bindPort(stratPort, {
     protocol: "grpc",
-  });
+  })
   const stratumInterface = sdk.createInterface(effects, {
     name: "stratum",
     id: "stratum",
@@ -40,9 +40,9 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
     username: "",
     path: "",
     search: {},
-  });
-  const stratReceipt = await stratOrigin.export([stratumInterface]);
+  })
+  const stratReceipt = await stratOrigin.export([stratumInterface])
 
   // return [httpReceipt, stratReceipt]
-  return [stratReceipt];
-});
+  return [stratReceipt]
+})

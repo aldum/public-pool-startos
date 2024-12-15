@@ -1,0 +1,12 @@
+{
+  "fmt": {
+    "semiColons": false
+  },
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": false
+  },
+  "unstable": [
+    "sloppy-imports"
+  ]
+}

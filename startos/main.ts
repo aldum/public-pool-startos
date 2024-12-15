@@ -1,7 +1,7 @@
-import { sdk } from "./sdk";
-import { T } from "@start9labs/start-sdk";
+import { sdk } from "./sdk"
+import { T } from "@start9labs/start-sdk"
 // import { stratPort, uiPort } from "./utils";
-import { stratPort } from "./utils";
+import { stratPort } from "./utils"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   /**
@@ -9,13 +9,13 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    *
    * In this section, we fetch any resources or run any desired preliminary commands.
    */
-  console.info("Starting...");
+  console.info("Starting...")
   /**
    * ======================== Additional Health Checks (optional) ========================
    *
    * In this section, we define *additional* health checks beyond those included with each daemon (below).
    */
-  const healthReceipts: T.HealthReceipt[] = [];
+  const healthReceipts: T.HealthReceipt[] = []
 
   // const { PUBPOOL__server__ROOT_URL } = await sdk.store.getOwn(
   //   effects,
@@ -31,7 +31,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    *
    * Each daemon defines its own health check, which can optionally be exposed to the user.
    */
-  const daemons = sdk.Daemons.of(effects, started, healthReceipts);
+  const daemons = sdk.Daemons.of(effects, started, healthReceipts)
   // daemons.addDaemon(
   //   "frontend",
   //   {
@@ -83,10 +83,10 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       },
       requires: [],
     },
-  );
+  )
 
-  return daemons;
-});
+  return daemons
+})
 
 // type PubPoolEnv = {
 //   PUBPOOL__server__ROOT_URL: string;
