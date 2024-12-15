@@ -1,7 +1,6 @@
 import { sdk } from "./sdk"
 import { T } from "@start9labs/start-sdk"
-// import { stratPort, uiPort } from "./utils";
-import { stratPort } from "./utils"
+import { apiPort, apiURL, stratPort, uiPort } from "./utils"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   /**
@@ -17,13 +16,10 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   const healthReceipts: T.HealthReceipt[] = []
 
-  // const { PUBPOOL__server__ROOT_URL } = await sdk.store.getOwn(
-  //   effects,
-  //   sdk.StorePath,
-  // ).const();
-  // const env: PubPoolEnv = {
-  //   PUBPOOL__server__ROOT_URL,
-  // };
+  console.info(
+    "==================== Starting Public Pool =====================",
+  )
+
   /**
    * ======================== Daemons ========================
    *
@@ -32,38 +28,18 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    * Each daemon defines its own health check, which can optionally be exposed to the user.
    */
   const daemons = sdk.Daemons.of(effects, started, healthReceipts)
-  // daemons.addDaemon(
-  //   "frontend",
-  //   {
-  //     image: { id: "frontend" },
-  //     command: ["/bin/sh", "/entrypoint.sh"],
-  //     env,
-  //     mounts: sdk.Mounts.of().addVolume("frontend", null, "/data", false),
-  //     ready: {
-  //       display: "Web Interface",
-  //       fn: () =>
-  //         sdk.healthCheck.checkPortListening(effects, uiPort, {
-  //           successMessage: "Server is ready",
-  //           errorMessage:
-  //             "Server is experiencing an issue. Please check the logs.",
-  //         }),
-  //     },
-  //     requires: [],
-  //   },
-  // );
 
   daemons.addDaemon(
     "primary",
     {
       image: { id: "backend" },
       command: ["/usr/local/bin/node", "dist/main"],
-      // env,
       env: {
         BITCOIN_RPC_URL: "http://bitcoind.startos",
         BITCOIN_RPC_PORT: "8332",
         BITCOIN_RPC_TIMEOUT: "25000",
-        STRATUM_PORT: "3333",
-        API_PORT: "3334",
+        STRATUM_PORT: stratPort.toString(),
+        API_PORT: apiPort.toString(),
         NETWORK: "mainnet",
         API_SECURE: "false",
         ENABLE_SOLO: "true",
@@ -76,7 +52,29 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
         display: "Stratum Interface",
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, stratPort, {
-            successMessage: "Server is ready",
+            successMessage: "Stratum is ready",
+            errorMessage:
+              "Stratum is experiencing an issue. Please check the logs.",
+          }),
+      },
+      requires: [],
+    },
+  )
+
+  daemons.addDaemon(
+    "frontend",
+    {
+      image: { id: "frontend" },
+      command: ["/bin/sh", "/assets/entrypoint.sh"],
+      env: {
+        HOME: "/home",
+      },
+      mounts: sdk.Mounts.of().addAssets("frontend", null, "/assets"),
+      ready: {
+        display: "Web Interface",
+        fn: () =>
+          sdk.healthCheck.checkPortListening(effects, uiPort, {
+            successMessage: "UI is ready",
             errorMessage:
               "Server is experiencing an issue. Please check the logs.",
           }),
@@ -87,7 +85,3 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
 
   return daemons
 })
-
-// type PubPoolEnv = {
-//   PUBPOOL__server__ROOT_URL: string;
-// };

@@ -13,7 +13,7 @@ export const manifest = setupManifest({
     short: "A Nestjs and Typescript Bitcoin stratum mining server",
     long: "A Nestjs and Typescript Bitcoin stratum mining server",
   },
-  assets: [],
+  assets: ["frontend"],
   volumes: ["db"],
   images: {
     backend: {
@@ -21,11 +21,11 @@ export const manifest = setupManifest({
         dockerTag: "sethforprivacy/public-pool",
       },
     },
-    // frontend: {
-    //   source: {
-    //     dockerTag: 'sethforprivacy/public-pool-ui',
-    //   },
-    // },
+    frontend: {
+      source: {
+        dockerTag: "sethforprivacy/public-pool-ui",
+      },
+    },
   },
   hardwareRequirements: {},
   alerts: {
