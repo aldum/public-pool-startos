@@ -1,9 +1,5 @@
 PKG_ID := pubpool
 
-# IMAGES="docker-images"
-# X64_IMG="$(IMAGES)/x86_64.tar"
-# A64_IMG="$(IMAGES)/aarch64.tar"
-
 # Default target
 all: ${PACKAGE_ID}.s9pk
 

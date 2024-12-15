@@ -14,7 +14,7 @@ export const manifest = setupManifest({
     long: "A Nestjs and Typescript Bitcoin stratum mining server",
   },
   assets: [],
-  volumes: ["frontend", "backend"],
+  volumes: ["db"],
   images: {
     backend: {
       source: {

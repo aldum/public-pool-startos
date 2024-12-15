@@ -58,7 +58,20 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       image: { id: "backend" },
       command: ["/usr/local/bin/node", "dist/main"],
       // env,
-      mounts: sdk.Mounts.of().addVolume("backend", null, "/data", false),
+      env: {
+        BITCOIN_RPC_URL: "http://bitcoind.startos",
+        BITCOIN_RPC_PORT: "8332",
+        BITCOIN_RPC_TIMEOUT: "25000",
+        STRATUM_PORT: "3333",
+        API_PORT: "3334",
+        NETWORK: "mainnet",
+        API_SECURE: "false",
+        ENABLE_SOLO: "true",
+        ENABLE_PROXY: "false",
+        BITCOIN_RPC_USER: "bitcoin",
+        BITCOIN_RPC_PASSWORD: "mlot7q2qyt5u4pymta2d",
+      },
+      mounts: sdk.Mounts.of().addVolume("db", null, "/public-pool/DB", false),
       ready: {
         display: "Stratum Interface",
         fn: () =>
