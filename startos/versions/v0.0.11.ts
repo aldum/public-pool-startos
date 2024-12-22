@@ -1,0 +1,7 @@
+import { VersionInfo } from "@start9labs/start-sdk";
+
+export const v0_0_11 = VersionInfo.of({
+  version: "0.0.11:0",
+  releaseNotes: "Revamped for StartOS 0.3.6 , strat URL",
+  migrations: {},
+});
