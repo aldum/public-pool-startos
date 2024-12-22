@@ -1,4 +1,4 @@
-PKG_ID := pubpool
+PACKAGE_ID := pubpool
 
 # Default target
 all: ${PACKAGE_ID}.s9pk
@@ -21,3 +21,10 @@ clean:
 	rm -rf ${PACKAGE_ID}.s9pk
 	rm -rf javascript
 	rm -rf node_modules
+
+# Install target
+install: ${PACKAGE_ID}.s9pk
+	@if [ ! -f ~/.startos/config.yaml ]; then echo "You must define \"host: http://server-name.local\" in ~/.startos/config.yaml config file first."; exit 1; fi
+	@echo "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n"
+	@[ -f $(PACKAGE_ID).s9pk ] || ( $(MAKE) && echo -e "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n" )
+	@start-cli package install -s $(PACKAGE_ID).s9pk
