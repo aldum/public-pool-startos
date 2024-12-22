@@ -1,5 +1,5 @@
 import { sdk } from '../sdk'
-// import { setPrimaryUrl } from './set-primary-url'
+import { setStratumUrl } from './set-stratum-url'
 
 export const actions = sdk.Actions.of()
-  // .addAction(setPrimaryUrl)
+  .addAction(setStratumUrl)
