@@ -37,5 +37,11 @@ export const manifest = setupManifest({
     start: null,
     stop: null,
   },
-  dependencies: {},
+  dependencies: {
+    bitcoind: {
+      description: "Communicate with the Bitcoin Network",
+      optional: false,
+      s9pk: "../btcd-036/bitcoind-036.s9pk",
+    },
+  },
 })
