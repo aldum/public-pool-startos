@@ -10,11 +10,11 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   const stratumInterface = sdk.createInterface(effects, {
     name: "stratum",
     id: "stratum",
-    description: "Used for mining",
+    description: "Used for connecting miners",
     type: "api",
     hasPrimary: false,
     masked: false,
-    schemeOverride: null,
+    schemeOverride: { noSsl: 'stratum' , ssl: null},
     username: "",
     path: "",
     search: {},
