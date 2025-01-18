@@ -5,9 +5,13 @@ export const uiPort = 80
 export const stratPort = 3333
 export const apiPort = 3334
 export const apiURL = `backend.pubpool.startos:${apiPort}`
+export const uiPort = 80
+
+export type InterfaceId = "stratum" | "http"
 
 export async function getInterfaceUrls(
-  effects: Effects, id : string
+  effects: Effects,
+  id: InterfaceId,
 ): Promise<string[]> {
   const netInterface = await sdk.serviceInterface
     .getOwn(effects, id)
@@ -17,7 +21,7 @@ export async function getInterfaceUrls(
 }
 
 export function getStratUrls(
-  effects: Effects
+  effects: Effects,
 ): Promise<string[]> {
   return getInterfaceUrls(effects, 'stratum')
 }
