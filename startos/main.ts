@@ -19,7 +19,8 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       command: ["/bin/sh", "/assets/init.sh"],
       env: {},
       mounts: sdk.Mounts.of()
-        .addVolume("db", null, "/public-pool/DB", false)
+        .addVolume("pool", "db", "/public-pool/DB", false)
+        .addVolume("pool", "cfg", "/cfg", true)
         .addAssets("backend", null, "/assets")
         .addDependency<typeof btcManifest>(
           'bitcoind', 'main', null, '/btcd', true)
