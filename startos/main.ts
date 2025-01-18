@@ -1,7 +1,8 @@
 import { sdk } from "./sdk"
 import { T } from "@start9labs/start-sdk"
-import { apiPort, stratPort, uiPort } from "./utils"
-import { manifest as btcManifest } from 'bitcoind-startos/startos/manifest'
+import { apiPort, getStratUrls, stratPort, uiPort } from "./utils"
+import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
+import { pubpoolEnvFile } from "./file-models/.env"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   console.info(
@@ -11,6 +12,23 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   const healthReceipts: T.HealthReceipt[] = []
 
   const daemons = sdk.Daemons.of(effects, started, healthReceipts)
+
+  pubpoolEnvFile.write({
+    BITCOIN_RPC_URL: "http://bitcoind.startos",
+    BITCOIN_RPC_PORT: "8332",
+    BITCOIN_RPC_TIMEOUT: "25000",
+    STRATUM_PORT: stratPort.toString(),
+    API_PORT: apiPort.toString(),
+    NETWORK: "mainnet",
+    API_SECURE: "false",
+    ENABLE_SOLO: "true",
+    ENABLE_PROXY: "false",
+    BITCOIN_RPC_USER: "bitcoin",
+    // BITCOIN_RPC_PASSWORD: "",
+    BITCOIN_RPC_PASSWORD: "",
+    // BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie",
+    // BITCOIN_RPC_COOKIEFILE: undefined,
+  })
 
   daemons.addDaemon(
     "pool",

@@ -1,10 +1,12 @@
 import { sdk } from "./sdk"
 import { Effects } from "@start9labs/start-sdk/base/lib/Effects"
 
-export const uiPort = 80
+// backend
 export const stratPort = 3333
+export const defaultStratUrl = `localhost:${stratPort}`
 export const apiPort = 3334
-export const apiURL = `backend.pubpool.startos:${apiPort}`
+export const apiURL = `backend.public-pool.startos:${apiPort}`
+// frontend
 export const uiPort = 80
 
 export type InterfaceId = "stratum" | "http"
