@@ -8,5 +8,13 @@
   },
   "unstable": [
     "sloppy-imports"
-  ]
+  ],
+  "lint": {
+    "rules": {
+      "exclude": [
+        "no-sloppy-imports",
+        "require-await"
+      ]
+    }
+  }
 }
