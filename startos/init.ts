@@ -6,12 +6,14 @@ import { versions } from "./versions"
 import { actions } from "./actions"
 // import { utils } from '@start9labs/start-sdk'
 // import { setPrimaryUrl } from './actions/set-primary-url'
+import { setStratumUrl } from "./actions/set-stratum-url"
 
 // **** Install ****
 const install = sdk.setupInstall(async ({ effects }) => {
   // await sdk.store.setOwn(effects, sdk.StorePath, {
   //   PUBPOOL__server__ROOT_URL: '',
   // })
+  await sdk.action.requestOwn(effects, setStratumUrl, "critical")
 
   // await sdk.action.requestOwn(effects, setPrimaryUrl, 'critical')
 })
