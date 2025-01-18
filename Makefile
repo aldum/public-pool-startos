@@ -1,4 +1,4 @@
-PACKAGE_ID := pubpool
+PACKAGE_ID := public-pool
 
 # Default target
 all: ${PACKAGE_ID}.s9pk

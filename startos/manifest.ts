@@ -1,7 +1,7 @@
 import { setupManifest } from "@start9labs/start-sdk"
 
 export const manifest = setupManifest({
-  id: "pubpool",
+  id: "public-pool",
   title: "Public Pool",
   license: "mit",
   wrapperRepo: "https://git.aldum.pw/aldum/public-pool-startos",
