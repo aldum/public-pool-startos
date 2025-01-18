@@ -41,8 +41,12 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
         .addVolume("pool", "cfg", "/cfg", true)
         .addAssets("backend", null, "/assets")
         .addDependency<typeof btcManifest>(
-          'bitcoind', 'main', null, '/btcd', true)
-        ,
+          "bitcoind",
+          "main",
+          null,
+          "/btcd",
+          true,
+        ),
       ready: {
         display: "Stratum Interface",
         fn: () =>

@@ -25,5 +25,5 @@ export async function getInterfaceUrls(
 export function getStratUrls(
   effects: Effects,
 ): Promise<string[]> {
-  return getInterfaceUrls(effects, 'stratum')
+  return getInterfaceUrls(effects, "stratum")
 }

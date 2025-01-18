@@ -17,9 +17,8 @@ const install = sdk.setupInstall(async ({ effects }) => {
 
   // await sdk.action.requestOwn(effects, setPrimaryUrl, 'critical')
 })
-
 // **** Uninstall ****
-const uninstall = sdk.setupUninstall(async ({ effects }) => {})
+const uninstall = sdk.setupUninstall(async () => {})
 
 /**
  * Plumbing. DO NOT EDIT.
