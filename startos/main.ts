@@ -13,10 +13,10 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   const daemons = sdk.Daemons.of(effects, started, healthReceipts)
 
   daemons.addDaemon(
-    "primary",
+    "pool",
     {
-      image: { id: "backend" },
-      command: ["/bin/sh","/assets/init.sh"],
+      subcontainer: { imageId: "backend" },
+      command: ["/bin/sh", "/assets/init.sh"],
       env: {},
       mounts: sdk.Mounts.of()
         .addVolume("db", null, "/public-pool/DB", false)
@@ -40,7 +40,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   daemons.addDaemon(
     "frontend",
     {
-      image: { id: "frontend" },
+      subcontainer: { imageId: "frontend" },
       command: ["/bin/sh", "/assets/entrypoint.sh"],
       env: {
         HOME: "/home",
