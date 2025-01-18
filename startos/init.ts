@@ -10,6 +10,7 @@ import { setStratumUrl } from "./actions/set-stratum-url"
 
 // **** Install ****
 const install = sdk.setupInstall(async ({ effects }) => {
+  console.info("━━━━━ init start ━━━━━")
   // await sdk.store.setOwn(effects, sdk.StorePath, {
   //   PUBPOOL__server__ROOT_URL: '',
   // })

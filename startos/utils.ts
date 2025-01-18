@@ -19,6 +19,8 @@ export async function getInterfaceUrls(
     .getOwn(effects, id)
     .const()
 
+  console.info("getInterfaceUrls", JSON.stringify(netInterface))
+
   return netInterface?.addressInfo?.urls || []
 }
 

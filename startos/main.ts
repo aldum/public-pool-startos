@@ -11,6 +11,10 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
 
   const healthReceipts: T.HealthReceipt[] = []
 
+  const urls = await getStratUrls(effects)
+  for (const url of urls) {
+    console.log(JSON.stringify(`### iface: ${url}`))
+  }
   const daemons = sdk.Daemons.of(effects, started, healthReceipts)
 
   pubpoolEnvFile.write({
