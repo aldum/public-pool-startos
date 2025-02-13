@@ -24,11 +24,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     API_SECURE: "false",
     ENABLE_SOLO: "true",
     ENABLE_PROXY: "false",
-    BITCOIN_RPC_USER: "bitcoin",
-    // BITCOIN_RPC_PASSWORD: "",
-    BITCOIN_RPC_PASSWORD: "",
-    // BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie",
-    // BITCOIN_RPC_COOKIEFILE: undefined,
+    BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie",
   })
 
   daemons.addDaemon("pool", {
