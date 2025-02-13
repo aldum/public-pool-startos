@@ -24,11 +24,11 @@ const fromEnv = (text: string): shapetype => {
     const [keyRaw, valueRaw] = line.split('=', 2)
     const key =
       keyRaw
-        .replace(cfgPrefix, '')
+        ?.replace(cfgPrefix, '')
         ?.trim()
     const value =
       valueRaw
-        .replace(/['"]+/g, '')
+        ?.replace(/['"]+/g, '')
         ?.trim()
     if (key && value) {
       conf[key] = value
