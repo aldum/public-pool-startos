@@ -20,7 +20,7 @@ jobs:
       - name: Checkout services repository
         uses: actions/checkout@v4
         with:
-          ref: 036
+          ref: "036"
           submodules: recursive
 
       - name: Build the service package
@@ -36,8 +36,8 @@ jobs:
       - name: Setting package ID and title from the manifest
         id: save-out
         run: |
-          PKGID="$(sed -n -r -e "s/\s*id\s*: '(.+)',/\1/ p" startos/manifest.ts)"
-          TITLE="$(sed -n -r -e "s/\s*title\s*: '(.+)',/\1/ p" startos/manifest.ts)"
+          PKGID="$(sed -n -r -e "s/\s*id\s*:\s*['\"](.+)['\"],/\1/ p" startos/manifest.ts)"
+          TITLE="$(sed -n -r -e "s/\s*title\s*:\s*['\"](.+)['\"],/\1/ p" startos/manifest.ts)"
           echo "package_id=$PKGID" | tee -a $GITHUB_ENV $GITHUB_OUTPUT
           echo "package_title=$TITLE" | tee -a $GITHUB_ENV $GITHUB_OUTPUT
         shell: bash
