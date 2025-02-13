@@ -1,4 +1,5 @@
 import { sdk } from "../sdk"
+import { setEnv } from "./set-env"
 import { defaultStratUrl, getStratUrls } from "../utils"
 
 const { InputSpec, Value } = sdk
@@ -6,7 +7,6 @@ const { InputSpec, Value } = sdk
 export const inputSpec = InputSpec.of({
   url: Value.dynamicSelect(async ({ effects }) => {
     const stratUrls = await getStratUrls(effects)
-    console.warn("urls", JSON.stringify(stratUrls))
 
     return {
       name: "URL",
@@ -25,6 +25,7 @@ export const inputSpec = InputSpec.of({
 
 export const setStratumUrl = sdk.Action.withInput(
   "set-stratum-url",
+
   async () =>
     await {
       name: "Set Stratum URL",
@@ -45,7 +46,16 @@ export const setStratumUrl = sdk.Action.withInput(
   },
   // the execution function
   async ({ effects, input }) => {
-    await sdk.store.setOwn(effects, sdk.StorePath.STRATUM_URL, input.url)
+    await sdk.store.setOwn(effects,
+      sdk.StorePath.STRATUM_URL,
+      input.url)
+
+    await sdk.action.run({
+      effects,
+      actionId: "set-env",
+      input: {}
+    })
+
     return {
       version: "1",
       title: "URL successfully selected",
@@ -54,7 +64,7 @@ export const setStratumUrl = sdk.Action.withInput(
         name: "URL",
         type: "single",
         value: input.url,
-        description: "Primary URL",
+        description: "Stratum URL",
         copyable: true,
         masked: false,
         qr: false,
