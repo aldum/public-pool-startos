@@ -14,9 +14,7 @@ const install = sdk.setupInstall(async ({ effects }) => {
   // await sdk.store.setOwn(effects, sdk.StorePath, {
   //   PUBPOOL__server__ROOT_URL: '',
   // })
-  await sdk.action.requestOwn(effects, setStratumUrl, "critical")
-
-  // await sdk.action.requestOwn(effects, setPrimaryUrl, 'critical')
+  await sdk.action.requestOwn(effects, setStratumUrl, "important")
 })
 // **** Uninstall ****
 const uninstall = sdk.setupUninstall(async () => {})
