@@ -1,6 +1,6 @@
-import { StartSdk } from '@start9labs/start-sdk'
-import { manifest } from './manifest'
-import { Store } from './store'
+import { StartSdk } from "@start9labs/start-sdk"
+import { manifest } from "./manifest"
+import { Store } from "./store"
 
 /**
  * Plumbing. DO NOT EDIT.

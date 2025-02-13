@@ -4,38 +4,29 @@ import { InterfaceId, stratPort, uiPort } from "./utils"
 export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   // Stratum
   const rpcMulti = sdk.MultiHost.of(effects, "rpc")
-  const stratOrigin = await rpcMulti.bindPort(
-    stratPort,
-    {
-      protocol: "grpc",
-    },
-  )
+  const stratOrigin = await rpcMulti.bindPort(stratPort, {
+    protocol: "grpc",
+  })
   const stratId: InterfaceId = "stratum"
-  const stratumInterface = sdk.createInterface(
-    effects,
-    {
-      name: "stratum",
-      id: stratId,
-      description: "Used for connecting miners",
-      type: "api",
-      masked: false,
-      schemeOverride: { noSsl: "stratum", ssl: null },
-      username: "",
-      path: "",
-      search: {},
-    },
-  )
+  const stratumInterface = sdk.createInterface(effects, {
+    name: "stratum",
+    id: stratId,
+    description: "Used for connecting miners",
+    type: "api",
+    masked: false,
+    schemeOverride: { noSsl: "stratum", ssl: null },
+    username: "",
+    path: "",
+    search: {},
+  })
   const stratReceipt = await stratOrigin.export([stratumInterface])
 
   const uiMulti = sdk.MultiHost.of(effects, "ui-multi")
 
   // http
-  const httpOrigin = await uiMulti.bindPort(
-    uiPort,
-    {
-      protocol: "http",
-    },
-  )
+  const httpOrigin = await uiMulti.bindPort(uiPort, {
+    protocol: "http",
+  })
   const uiId: InterfaceId = "http"
   const httpInterface = sdk.createInterface(effects, {
     name: "Web UI",

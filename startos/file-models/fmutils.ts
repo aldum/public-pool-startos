@@ -2,9 +2,7 @@ export function jsonToDotenv<T extends Record<string, string | undefined>>(
   jsonObj: T,
 ): string {
   return Object.entries(jsonObj)
-    .map((
-      [key, value],
-    ) => `${key.toUpperCase()}=${value}`)
+    .map(([key, value]) => `${key.toUpperCase()}=${value}`)
     .join("\n")
 }
 

@@ -1,5 +1,5 @@
 import { VersionInfo, IMPOSSIBLE } from "@start9labs/start-sdk"
-import { sdk } from '../sdk'
+import { sdk } from "../sdk"
 import { defaultStratUrl } from "../utils"
 import { setStratumUrl } from "../actions/set-stratum-url"
 
@@ -11,7 +11,7 @@ export const v0_0_11 = VersionInfo.of({
       await sdk.store.setOwn(effects, sdk.StorePath, {
         STRATUM_URL: defaultStratUrl,
       })
-      await sdk.action.requestOwn(effects, setStratumUrl, 'critical')
+      await sdk.action.requestOwn(effects, setStratumUrl, "critical")
     },
     down: IMPOSSIBLE,
   },

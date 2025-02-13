@@ -34,58 +34,47 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     // BITCOIN_RPC_COOKIEFILE: undefined,
   })
 
-  daemons.addDaemon(
-    "pool",
-    {
-      subcontainer: { imageId: "backend" },
-      command: ["/bin/sh", "/assets/init.sh"],
-      env: {},
-      mounts: sdk.Mounts.of()
-        .addVolume("pool", "db", "/public-pool/DB", false)
-        .addVolume("pool", "cfg", "/cfg", true)
-        .addAssets("backend", null, "/assets")
-        .addDependency<typeof btcManifest>(
-          "bitcoind",
-          "main",
-          null,
-          "/btcd",
-          true,
-        ),
-      ready: {
-        display: "Stratum Interface",
-        fn: () =>
-          sdk.healthCheck.checkPortListening(effects, stratPort, {
-            successMessage: "Stratum is ready",
-            errorMessage:
-              "Stratum is experiencing an issue. Please check the logs.",
-          }),
-      },
-      requires: [],
+  daemons.addDaemon("pool", {
+    subcontainer: { imageId: "backend" },
+    command: ["/bin/sh", "/assets/init.sh"],
+    env: {},
+    mounts: sdk.Mounts.of()
+      .addVolume("pool", "db", "/public-pool/DB", false)
+      .addVolume("pool", "cfg", "/cfg", true)
+      .addAssets("backend", null, "/assets")
+      .addDependency<
+        typeof btcManifest
+      >("bitcoind", "main", null, "/btcd", true),
+    ready: {
+      display: "Stratum Interface",
+      fn: () =>
+        sdk.healthCheck.checkPortListening(effects, stratPort, {
+          successMessage: "Stratum is ready",
+          errorMessage:
+            "Stratum is experiencing an issue. Please check the logs.",
+        }),
     },
-  )
+    requires: [],
+  })
 
-  daemons.addDaemon(
-    "frontend",
-    {
-      subcontainer: { imageId: "frontend" },
-      command: ["/bin/sh", "/assets/entrypoint.sh"],
-      env: {
-        HOME: "/home",
-      },
-      mounts: sdk.Mounts.of()
-        .addAssets("frontend", null, "/assets"),
-      ready: {
-        display: "Web Interface",
-        fn: () =>
-          sdk.healthCheck.checkPortListening(effects, uiPort, {
-            successMessage: "UI is ready",
-            errorMessage:
-              "Server is experiencing an issue. Please check the logs.",
-          }),
-      },
-      requires: [],
+  daemons.addDaemon("frontend", {
+    subcontainer: { imageId: "frontend" },
+    command: ["/bin/sh", "/assets/entrypoint.sh"],
+    env: {
+      HOME: "/home",
     },
-  )
+    mounts: sdk.Mounts.of().addAssets("frontend", null, "/assets"),
+    ready: {
+      display: "Web Interface",
+      fn: () =>
+        sdk.healthCheck.checkPortListening(effects, uiPort, {
+          successMessage: "UI is ready",
+          errorMessage:
+            "Server is experiencing an issue. Please check the logs.",
+        }),
+    },
+    requires: [],
+  })
 
   return daemons
 })

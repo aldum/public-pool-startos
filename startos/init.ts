@@ -11,7 +11,7 @@ const install = sdk.setupInstall(async ({ effects }) => {
   await sdk.action.requestOwn(effects, setStratumUrl, "important")
 })
 // **** Uninstall ****
-const uninstall = sdk.setupUninstall(async () => { })
+const uninstall = sdk.setupUninstall(async () => {})
 
 /**
  * Plumbing. DO NOT EDIT.

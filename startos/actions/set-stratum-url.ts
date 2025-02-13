@@ -25,14 +25,15 @@ export const inputSpec = InputSpec.of({
 
 export const setStratumUrl = sdk.Action.withInput(
   "set-stratum-url",
-  async () => (await {
-    name: "Set Stratum URL",
-    description: "Choose which of your URLs are advertised in the Web UI",
-    warning: null,
-    allowedStatuses: "any",
-    group: null,
-    visibility: "enabled",
-  }),
+  async () =>
+    await {
+      name: "Set Stratum URL",
+      description: "Choose which of your URLs are advertised in the Web UI",
+      warning: null,
+      allowedStatuses: "any",
+      group: null,
+      visibility: "enabled",
+    },
   inputSpec,
   async ({ effects }) => {
     const url = await sdk.store
@@ -44,20 +45,16 @@ export const setStratumUrl = sdk.Action.withInput(
   },
   // the execution function
   async ({ effects, input }) => {
-    await sdk.store.setOwn(
-      effects,
-      sdk.StorePath.STRATUM_URL,
-      input.url,
-    )
+    await sdk.store.setOwn(effects, sdk.StorePath.STRATUM_URL, input.url)
     return {
-      version: '1',
-      title: 'URL successfully selected',
-      message: '',
+      version: "1",
+      title: "URL successfully selected",
+      message: "",
       result: {
-        name: 'URL',
+        name: "URL",
         type: "single",
         value: input.url,
-        description: 'Primary URL',
+        description: "Primary URL",
         copyable: true,
         masked: false,
         qr: false,

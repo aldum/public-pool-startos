@@ -15,17 +15,13 @@ export async function getInterfaceUrls(
   effects: Effects,
   id: InterfaceId,
 ): Promise<string[]> {
-  const netInterface = await sdk.serviceInterface
-    .getOwn(effects, id)
-    .const()
+  const netInterface = await sdk.serviceInterface.getOwn(effects, id).const()
 
   console.info("getInterfaceUrls", JSON.stringify(netInterface))
 
   return netInterface?.addressInfo?.urls || []
 }
 
-export function getStratUrls(
-  effects: Effects,
-): Promise<string[]> {
+export function getStratUrls(effects: Effects): Promise<string[]> {
   return getInterfaceUrls(effects, "stratum")
 }
