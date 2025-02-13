@@ -4,7 +4,7 @@ export const manifest = setupManifest({
   id: "public-pool",
   title: "Public Pool",
   license: "mit",
-  wrapperRepo: "https://git.aldum.pw/aldum/public-pool-startos",
+  wrapperRepo: "https://github.com/aldum/public-pool-startos",
   upstreamRepo: "https://github.com/benjamin-wilson/public-pool",
   supportSite: "https://github.com/benjamin-wilson/public-pool/issues",
   marketingSite: "https://github.com/benjamin-wilson/public-pool",
