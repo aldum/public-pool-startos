@@ -2,7 +2,7 @@ import { sdk } from "./sdk"
 import { T } from "@start9labs/start-sdk"
 import { apiPort, stratPort, uiPort } from "./utils"
 import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
-import { ppEnv } from "./file-models/_env"
+import { ppEnv } from "./file-models/pubPoolEnv"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   console.info(
