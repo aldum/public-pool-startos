@@ -25,7 +25,7 @@ export const manifest = setupManifest({
     },
     frontend: {
       source: {
-        dockerTag: "ghcr.io/aldum/public-pool-ui:alpine",
+        dockerTag: "ghcr.io/aldum/public-pool-ui",
       },
     },
   },
