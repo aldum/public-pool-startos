@@ -15,7 +15,7 @@ export const manifest = setupManifest({
   },
   hardwareRequirements: {},
 
-  assets: ["backend", "frontend"],
+  assets: ["frontend"],
   volumes: ["pool"],
   images: {
     backend: {
