@@ -1,6 +1,6 @@
 import { sdk } from "./sdk"
 import { T } from "@start9labs/start-sdk"
-import { apiPort, getStratUrls, stratPort, uiPort } from "./utils"
+import { apiPort, stratPort, uiPort } from "./utils"
 import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
 import { pubpoolEnvFile } from "./file-models/.env"
 
@@ -11,10 +11,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
 
   const healthReceipts: T.HealthReceipt[] = []
 
-  const urls = await getStratUrls(effects)
-  for (const url of urls) {
-    console.log(JSON.stringify(`### iface: ${url}`))
-  }
+  await sdk.action.run({ effects, actionId: "set-env", input: {} })
   const daemons = sdk.Daemons.of(effects, started, healthReceipts)
 
   pubpoolEnvFile.write({
