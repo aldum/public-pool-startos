@@ -10,6 +10,7 @@ export const apiURL = `backend.public-pool.startos:${apiPort}`
 export const uiPort = 80
 
 export type InterfaceId = "stratum" | "http"
+export const urlScheme = 'stratum+tcp'
 
 export async function getInterfaceUrls(
   effects: Effects,

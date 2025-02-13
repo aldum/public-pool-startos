@@ -14,7 +14,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
     description: "Used for connecting miners",
     type: "api",
     masked: false,
-    schemeOverride: { noSsl: "stratum", ssl: null },
+    schemeOverride: { noSsl: "stratum+tcp", ssl: null },
     username: "",
     path: "",
     search: {},

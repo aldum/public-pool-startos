@@ -63,7 +63,9 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     env: {
       HOME: "/home",
     },
-    mounts: sdk.Mounts.of().addAssets("frontend", null, "/assets"),
+    mounts: sdk.Mounts.of()
+      .addAssets("frontend", null, "/assets")
+      .addVolume("pool", "env", "/var/www/html/env", true),
     ready: {
       display: "Web Interface",
       fn: () =>
