@@ -7,7 +7,7 @@ check:
 	npm run check
 
 # Build targets
-${PACKAGE_ID}.s9pk: $(shell start-cli s9pk list-ingredients) check
+${PACKAGE_ID}.s9pk: $(shell start-cli s9pk list-ingredients 2> /dev/null) check
 	start-cli s9pk pack
 
 javascript/index.js: $(shell find startos -name "*.ts") tsconfig.json node_modules package.json
