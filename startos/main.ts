@@ -49,15 +49,36 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     requires: [],
   })
 
+  const frontend = await sdk.SubContainer.of(effects,
+    { imageId: "frontend" },
+    "frontend"
+  )
+  frontend.mount(
+    {
+      type: "assets",
+      id: "frontend",
+      subpath: null,
+    },
+    "/assets"
+  )
+  frontend.mount(
+    {
+      type: "volume",
+      id: "pool",
+      subpath: "env",
+      readonly: false
+    },
+    "/var/www/html/env"
+  )
+
   daemons.addDaemon("frontend", {
-    subcontainer: { imageId: "frontend" },
+    subcontainer: frontend,
     command: ["/bin/sh", "/assets/entrypoint.sh"],
     env: {
       HOME: "/home",
     },
     mounts: sdk.Mounts.of()
-      .addAssets("frontend", null, "/assets")
-      .addVolume("pool", "env", "/var/www/html/env", true),
+    ,
     ready: {
       display: "Web Interface",
       fn: () =>
