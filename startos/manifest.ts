@@ -41,7 +41,7 @@ export const manifest = setupManifest({
     bitcoind: {
       description: "Communicate with the Bitcoin Network",
       optional: false,
-      s9pk: "../btcd-036/bitcoind-036.s9pk",
+      s9pk: "https://github.com/aldum/bitcoind-startos/releases/download/v28.1-1/bitcoind.s9pk",
     },
   },
 })
