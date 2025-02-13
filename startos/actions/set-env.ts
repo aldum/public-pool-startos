@@ -23,12 +23,5 @@ export const setEnv = sdk.Action.withoutInput(
     if (stratumUrl?.length > 0) {
       await envjs.write({ STRATUM_URL: stratumUrl })
     }
-
-    return {
-      version: '1',
-      title: 'Success',
-      message: "Env set",
-      result: null,
-    }
   }
 )
