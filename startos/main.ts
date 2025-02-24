@@ -32,11 +32,18 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     subcontainer: { imageId: "backend" },
     command: ["/usr/local/bin/node", "/public-pool/dist/main"],
     env: pubpoolEnv,
-    mounts: sdk.Mounts.of()
-      .addVolume("pool", "db", "/public-pool/DB", false)
-      .addDependency<
-        typeof btcManifest
-      >("bitcoind", "main", null, "/btcd", true),
+    mounts: sdk.Mounts.of().addVolume(
+      "pool",
+      "db",
+      "/public-pool/DB",
+      false
+    ).addDependency<typeof btcManifest>(
+      "bitcoind",
+      "main",
+      null,
+      "/btcd",
+      true
+    ),
     ready: {
       display: "Stratum Interface",
       fn: () =>
