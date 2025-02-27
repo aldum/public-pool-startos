@@ -77,10 +77,13 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     },
     "/var/www/html/env"
   )
+  frontend.exec(
+    ['cp', '-vf', '/assets/Caddyfile', '/etc/']
+  )
 
   daemons.addDaemon("frontend", {
     subcontainer: frontend,
-    command: ["/bin/sh", "/assets/entrypoint.sh"],
+    command: ["/bin/sh", "/entrypoint.sh"],
     env: {
       HOME: "/home",
     },
