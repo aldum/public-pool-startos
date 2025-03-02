@@ -21,7 +21,7 @@ export const setEnv = sdk.Action.withoutInput(
     const stratumUrl = rawUrl?.replace(`${urlScheme}://`, '')
 
     if (stratumUrl?.length > 0) {
-      await envjs.write({ STRATUM_URL: stratumUrl })
+      await envjs.write(effects, { STRATUM_URL: stratumUrl })
     }
   }
 )

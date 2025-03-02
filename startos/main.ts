@@ -1,15 +1,15 @@
 import { sdk } from "./sdk"
-import { T } from "@start9labs/start-sdk"
 import { apiPort, stratPort, uiPort } from "./utils"
 import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
 import { ppEnv } from "./file-models/pubPoolEnv"
+import { HealthCheck } from "@start9labs/start-sdk/package/lib/health/HealthCheck"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   console.info(
     "━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Starting Public Pool ━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
   )
 
-  const healthReceipts: T.HealthReceipt[] = []
+  const healthChecks: HealthCheck[] = []
 
   const pubpoolEnv: ppEnv = {
     BITCOIN_RPC_URL: "http://bitcoind.startos",
