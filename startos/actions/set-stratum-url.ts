@@ -1,5 +1,5 @@
 import { sdk } from "../sdk"
-import { defaultStratUrl, getStratUrls } from "../utils"
+import { defaultStratUrl, getStratUrls, isStratumUrlSet } from "../utils"
 
 const { InputSpec, Value } = sdk
 
@@ -71,3 +71,11 @@ export const setStratumUrl = sdk.Action.withInput(
     }
   },
 )
+
+export const requestIfNotSet = async (effects: Effects) => {
+  console.log(1)
+  if (!isStratumUrlSet) {
+    await sdk.action.requestOwn(effects, setStratumUrl, "important")
+  }
+}
+

@@ -26,3 +26,11 @@ export async function getInterfaceUrls(
 export function getStratUrls(effects: Effects): Promise<string[]> {
   return getInterfaceUrls(effects, "stratum")
 }
+
+export async function isStratumUrlSet(effects: Effects): Promise<Boolean> {
+  const storedURL = await sdk.store.getOwn(effects,
+    sdk.StorePath.STRATUM_URL
+  ).const()
+  return storedURL !== '' &&
+    storedURL != defaultStratUrl
+}
