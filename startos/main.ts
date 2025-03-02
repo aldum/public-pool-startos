@@ -24,26 +24,40 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie",
   }
 
+  const backend = await sdk.SubContainer.of(effects,
+    { imageId: "backend" },
+    "backend"
+  )
+  backend.mount(
+    {
+      type: "volume",
+      id: "pool",
+      subpath: "/public-pool/DB",
+      readonly: false
+    },
+    "db",
+  )
+  backend.mount({
+    type: "pointer",
+    packageId: "bitcoind",
+    volumeId: "main",
+    subpath: null,
+    readonly: true
+  },
+    "/btcd"
+  )
+
   await sdk.action.run({ effects, actionId: "set-env", input: {} })
 
-  const daemons = sdk.Daemons.of(effects, started, healthReceipts)
-
-  daemons.addDaemon("pool", {
-    subcontainer: { imageId: "backend" },
+  const daemons = sdk.Daemons.of(
+    effects,
+    started,
+    healthChecks
+  ).addDaemon("pool", {
+    subcontainer: backend,
     command: ["/usr/local/bin/node", "/public-pool/dist/main"],
     env: pubpoolEnv,
-    mounts: sdk.Mounts.of().addVolume(
-      "pool",
-      "db",
-      "/public-pool/DB",
-      false
-    ).addDependency<typeof btcManifest>(
-      "bitcoind",
-      "main",
-      null,
-      "/btcd",
-      true
-    ),
+    mounts: sdk.Mounts.of(),
     ready: {
       display: "Stratum Interface",
       fn: () =>
