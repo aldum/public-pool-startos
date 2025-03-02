@@ -91,7 +91,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     requires: [],
   }).addDaemon("frontend", {
     subcontainer: frontend,
-    command: ["/bin/sh", "/entrypoint.sh"],
+    command: ["caddy", "run", "--config", "/assets/Caddyfile"],
     env: {
       HOME: "/home",
     },
