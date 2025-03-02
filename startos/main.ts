@@ -1,5 +1,5 @@
 import { sdk } from "./sdk"
-import { apiPort, stratPort, uiPort } from "./utils"
+import { apiPort, rpcPort, stratPort, uiPort } from "./utils"
 import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
 import { ppEnv } from "./file-models/pubPoolEnv"
 import { HealthCheck } from "@start9labs/start-sdk/package/lib/health/HealthCheck"
@@ -13,7 +13,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
 
   const pubpoolEnv: ppEnv = {
     BITCOIN_RPC_URL: "http://bitcoind.startos",
-    BITCOIN_RPC_PORT: "8332",
+    BITCOIN_RPC_PORT: rpcPort.toString(),
     BITCOIN_RPC_TIMEOUT: "25000",
     STRATUM_PORT: stratPort.toString(),
     API_PORT: apiPort.toString(),
