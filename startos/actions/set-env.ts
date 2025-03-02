@@ -1,6 +1,6 @@
 import { sdk } from '../sdk'
 import { envjs } from "../file-models/env_js"
-import { urlScheme } from "../utils"
+import { defaultStratUrl, urlScheme } from "../utils"
 
 export const setEnv = sdk.Action.withoutInput(
   'set-env',
@@ -18,7 +18,8 @@ export const setEnv = sdk.Action.withoutInput(
     const rawUrl = await sdk.store
       .getOwn(effects, sdk.StorePath.STRATUM_URL)
       .const()
-    const stratumUrl = rawUrl?.replace(`${urlScheme}://`, '')
+    const stratumUrl = (rawUrl || defaultStratUrl)
+      .replace(`${urlScheme}://`, '')
 
     if (stratumUrl?.length > 0) {
       await envjs.write(effects, { STRATUM_URL: stratumUrl })
