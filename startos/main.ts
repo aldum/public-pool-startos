@@ -16,10 +16,23 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     decor_line,
   )
 
-  const healthChecks: HealthCheck[] = []
   const auth = await getAuth(effects)
   if (!auth) { await authRequest(effects) }
   await urlCondRequest(effects)
+
+  const apiHealth = sdk.HealthCheck.of(effects,
+    {
+      id: "api",
+      name: "Pool API",
+      fn: () =>
+        sdk.healthCheck.checkPortListening(effects, apiPort, {
+          successMessage: "",
+          errorMessage:
+            "The API is not reachable",
+        }),
+    }
+  )
+  const healthChecks: HealthCheck[] = [apiHealth]
 
   const baseEnv: baseEnv = {
     BITCOIN_RPC_URL: "http://bitcoind.startos",
