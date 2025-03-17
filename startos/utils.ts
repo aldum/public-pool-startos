@@ -44,3 +44,15 @@ export function randomPassword() {
     len: 22,
   }
 }
+
+type Stringified<T> = {
+  [K in keyof T]: string
+}
+export function toStringlyTyped<
+  T extends Record<string, any>
+>(obj: T): Stringified<T> {
+  return Object.fromEntries(
+    Object.entries(obj).map(
+      ([key, value]) => [key, String(value)])
+  ) as Stringified<T>
+}

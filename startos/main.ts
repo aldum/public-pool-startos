@@ -1,5 +1,8 @@
 import { sdk } from "./sdk"
-import { apiPort, rpcPort, stratPort, uiPort } from "./utils"
+import {
+  apiPort, rpcPort,
+  stratPort, toStringlyTyped, uiPort
+} from "./utils"
 import { baseEnv } from "./file-models/pubPoolEnv"
 import { HealthCheck } from
   "@start9labs/start-sdk/package/lib/health/HealthCheck"
@@ -36,14 +39,14 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
 
   const baseEnv: baseEnv = {
     BITCOIN_RPC_URL: "http://bitcoind.startos",
-    BITCOIN_RPC_PORT: rpcPort.toString(),
-    BITCOIN_RPC_TIMEOUT: "25000",
-    STRATUM_PORT: stratPort.toString(),
-    API_PORT: apiPort.toString(),
+    BITCOIN_RPC_PORT: rpcPort,
+    BITCOIN_RPC_TIMEOUT: 25000,
+    STRATUM_PORT: stratPort,
+    API_PORT: apiPort,
     NETWORK: "mainnet",
-    API_SECURE: "false",
-    ENABLE_SOLO: "true",
-    ENABLE_PROXY: "false",
+    API_SECURE: false,
+    ENABLE_SOLO: true,
+    ENABLE_PROXY: false,
   }
   const pubpoolEnv = await (async () => {
     switch (auth) {
@@ -120,7 +123,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   ).addDaemon("backend", {
     subcontainer: backend,
     command: ["/usr/local/bin/node", "/public-pool/dist/main"],
-    env: pubpoolEnv,
+    env: toStringlyTyped(pubpoolEnv),
     mounts: sdk.Mounts.of(),
     ready: {
       display: "Stratum Interface",
