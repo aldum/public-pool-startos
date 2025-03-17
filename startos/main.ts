@@ -3,18 +3,16 @@ import { apiPort, rpcPort, stratPort, uiPort } from "./utils"
 import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
 import { baseEnv } from "./file-models/pubPoolEnv"
 import { HealthCheck } from "@start9labs/start-sdk/package/lib/health/HealthCheck"
-import { setAuth } from "./actions/set-auth"
+import { request as authRequest, getAuth } from "./actions/set-auth"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
-  const auth = await sdk.store.getOwn(effects, sdk.StorePath.AUTH).const()
-  if (!auth) {
-    sdk.action.requestOwn(effects, setAuth, 'critical')
-  }
   console.info(
     "━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Starting Public Pool ━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
   )
 
   const healthChecks: HealthCheck[] = []
+  const auth = await getAuth(effects)
+  if (!auth) { await authRequest(effects) }
 
   const baseEnv: baseEnv = {
     BITCOIN_RPC_URL: "http://bitcoind.startos",

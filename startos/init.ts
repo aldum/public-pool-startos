@@ -4,13 +4,15 @@ import { setDependencies } from "./dependencies"
 import { setInterfaces } from "./interfaces"
 import { versions } from "./versions"
 import { actions } from "./actions"
-import { setStratumUrl } from "./actions/set-stratum-url"
+import { requestIfNotSet as stratCondRequest } from
+  "./actions/set-stratum-url"
+import { request as authRequest } from "./actions/set-auth"
 import { defaultStratUrl } from "./utils"
 
 // **** Install ****
 const install = sdk.setupInstall(async ({ effects }) => {
-  await sdk.action.requestOwn(effects,
-    setStratumUrl, "important")
+  await stratCondRequest(effects)
+  await authRequest(effects)
 })
 // **** Uninstall ****
 const uninstall = sdk.setupUninstall(async () => { })
