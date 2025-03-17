@@ -1,13 +1,31 @@
-PACKAGE_ID := public-pool
+PACKAGE_ID := $(shell sed -n -r -e "s/\s*id\s*:\s*['\"](.+)['\"],/\1/ p" startos/manifest.ts)
 
-# Default target
-all: ${PACKAGE_ID}.s9pk
+.PHONY: all clean install build-js
 
-check: node_modules package.json
+all: check-deps check-init deps ${PACKAGE_ID}.s9pk
+	@echo " Done!"
+	@echo " Filesize:$(shell du -h $(PACKAGE_ID).s9pk) is ready"
+
+check-deps:
+	@if ! command -v start-cli > /dev/null; then \
+		echo "Error: start-cli not found. Please install it first."; \
+		exit 1; \
+	fi
+
+check-init:
+	@if [ ! -f ~/.startos/developer.key.pem ]; then \
+		start-cli init; \
+	fi
+
+deps: node_modules build-js
+
+build-js: javascript/index.js
+
+check-ts: node_modules package.json
 	npm run check
 
-# Build targets
-${PACKAGE_ID}.s9pk: check $(shell start-cli s9pk list-ingredients 2> /dev/null)
+${PACKAGE_ID}.s9pk: check-ts build-js
+	$(eval INGREDIENTS := $(shell start-cli s9pk list-ingredients))
 	start-cli s9pk pack
 
 javascript/index.js: $(shell find startos -name "*.ts") tsconfig.json node_modules package.json
@@ -19,15 +37,12 @@ node_modules: package.json package-lock.json
 package-lock.json: package.json
 	npm i
 
-# Clean target
 clean:
 	rm -rf ${PACKAGE_ID}.s9pk
 	rm -rf javascript
 	rm -rf node_modules
 
-# Install target
 install: ${PACKAGE_ID}.s9pk
 	@if [ ! -f ~/.startos/config.yaml ]; then echo "You must define \"host: http://server-name.local\" in ~/.startos/config.yaml config file first."; exit 1; fi
-	@echo "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n"
-	@[ -f $(PACKAGE_ID).s9pk ] || ( $(MAKE) && echo -e "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n" )
+	@echo -e "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n"
 	@start-cli package install -s $(PACKAGE_ID).s9pk
