@@ -1,5 +1,6 @@
-# Instructions for Pubpool
+# Instructions for Public Pool
 
-Point your miners at specified Tor address under Interfaces (or the UI).
-Unfortunately, the stratum interface cannot be opened over LAN until clearnet
-support arrives in StartOS.
+1. Set up authentication with bitcoind
+1. Start Public Pool
+1. (optional) Select stratum URL to display
+1. Happy mining!
