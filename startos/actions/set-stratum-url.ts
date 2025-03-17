@@ -1,5 +1,11 @@
+import { Effects } from
+  "@start9labs/start-sdk/base/lib/Effects"
 import { sdk } from "../sdk"
-import { defaultStratUrl, getStratUrls, isStratumUrlSet } from "../utils"
+import {
+  defaultStratUrl,
+  getStratUrls,
+  isStratumUrlSet
+} from "../utils"
 
 const { InputSpec, Value } = sdk
 
@@ -28,7 +34,8 @@ export const setStratumUrl = sdk.Action.withInput(
   async () =>
     await {
       name: "Set Stratum URL",
-      description: "Choose which of your URLs are advertised in the Web UI",
+      description:
+        "Choose which URL is advertised in the Web UI",
       warning: null,
       allowedStatuses: "any",
       group: null,
@@ -72,10 +79,12 @@ export const setStratumUrl = sdk.Action.withInput(
   },
 )
 
-export const requestIfNotSet = async (effects: Effects) => {
-  console.log(1)
-  if (!isStratumUrlSet) {
-    await sdk.action.requestOwn(effects, setStratumUrl, "important")
+export const requestIfUnset = async (effects: Effects) => {
+  const isSet = await isStratumUrlSet(effects)
+  if (!isSet) {
+    await sdk.action.requestOwn(effects, setStratumUrl,
+      "important", {
+      reason: "URL to display on the UI"
+    })
   }
 }
-

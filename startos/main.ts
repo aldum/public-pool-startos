@@ -4,6 +4,7 @@ import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
 import { baseEnv } from "./file-models/pubPoolEnv"
 import { HealthCheck } from "@start9labs/start-sdk/package/lib/health/HealthCheck"
 import { request as authRequest, getAuth } from "./actions/set-auth"
+import { requestIfUnset as urlCondRequest } from "./actions/set-stratum-url"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   console.info(
@@ -13,6 +14,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   const healthChecks: HealthCheck[] = []
   const auth = await getAuth(effects)
   if (!auth) { await authRequest(effects) }
+  await urlCondRequest(effects)
 
   const baseEnv: baseEnv = {
     BITCOIN_RPC_URL: "http://bitcoind.startos",
