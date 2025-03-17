@@ -1,6 +1,6 @@
 PACKAGE_ID := $(shell sed -n -r -e "s/\s*id\s*:\s*['\"](.+)['\"],/\1/ p" startos/manifest.ts)
 
-.PHONY: all clean install build-js
+.PHONY: all softclean clean install build-js
 
 all: check-deps check-init deps ${PACKAGE_ID}.s9pk
 	@echo " Done!"
@@ -37,9 +37,11 @@ node_modules: package.json package-lock.json
 package-lock.json: package.json
 	npm i
 
-clean:
+softclean:
 	rm -rf ${PACKAGE_ID}.s9pk
 	rm -rf javascript
+
+clean: softclean
 	rm -rf node_modules
 
 install: ${PACKAGE_ID}.s9pk
