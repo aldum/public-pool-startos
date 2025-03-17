@@ -5,7 +5,10 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   // Stratum
   const rpcMulti = sdk.MultiHost.of(effects, "rpc")
   const stratOrigin = await rpcMulti.bindPort(stratPort, {
-    protocol: "grpc",
+    preferredExternalPort: 3333,
+    secure: { ssl: false },
+    addSsl: null,
+    protocol: null,
   })
   const stratId: InterfaceId = "stratum"
   const stratumInterface = sdk.createInterface(effects, {

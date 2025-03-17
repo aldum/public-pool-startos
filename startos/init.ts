@@ -5,13 +5,15 @@ import { setInterfaces } from "./interfaces"
 import { versions } from "./versions"
 import { actions } from "./actions"
 import { setStratumUrl } from "./actions/set-stratum-url"
+import { defaultStratUrl } from "./utils"
 
 // **** Install ****
 const install = sdk.setupInstall(async ({ effects }) => {
-  await sdk.action.requestOwn(effects, setStratumUrl, "important")
+  await sdk.action.requestOwn(effects,
+    setStratumUrl, "important")
 })
 // **** Uninstall ****
-const uninstall = sdk.setupUninstall(async () => {})
+const uninstall = sdk.setupUninstall(async () => { })
 
 /**
  * Plumbing. DO NOT EDIT.
@@ -23,5 +25,10 @@ export const { packageInit, packageUninit, containerInit } = sdk.setupInit(
   setInterfaces,
   setDependencies,
   actions,
+  {
+    STRATUM_URL: defaultStratUrl,
+    AUTH: undefined,
+    USERPASS: undefined
+  },
   exposedStore,
 )

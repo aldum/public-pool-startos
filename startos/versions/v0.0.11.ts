@@ -7,11 +7,6 @@ export const v0_0_11 = VersionInfo.of({
   releaseNotes: "Revamped for StartOS 0.3.6",
   migrations: {
     up: async ({ effects }) => {
-      await sdk.store.setOwn(effects, sdk.StorePath, {
-        STRATUM_URL: defaultStratUrl,
-        AUTH: undefined,
-        USERPASS: undefined
-      })
     },
     down: IMPOSSIBLE,
   },
