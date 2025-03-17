@@ -37,17 +37,22 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   )
   const healthChecks: HealthCheck[] = [apiHealth]
 
+  const store = await sdk.store.getOwn(effects,
+    sdk.StorePath).const()
   const baseEnv: baseEnv = {
     BITCOIN_RPC_URL: "http://bitcoind.startos",
     BITCOIN_RPC_PORT: rpcPort,
-    BITCOIN_RPC_TIMEOUT: 25000,
+    BITCOIN_RPC_TIMEOUT: store.RPC_TIMEOUT,
     STRATUM_PORT: stratPort,
     API_PORT: apiPort,
     NETWORK: "mainnet",
     API_SECURE: false,
     ENABLE_SOLO: true,
     ENABLE_PROXY: false,
+    ZMQ_ENABLED: store.ZMQ_ENABLED,
+    POOL_IDENTIFIER: store.POOL_ID
   }
+
   const pubpoolEnv = await (async () => {
     switch (auth) {
       case 'USERPASS':

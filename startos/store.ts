@@ -6,7 +6,10 @@ export type Store = {
   USERPASS: {
     USER: string,
     PASSWORD: string
-  } | undefined
+  } | undefined,
+  POOL_ID: string,
+  RPC_TIMEOUT: number,
+  ZMQ_ENABLED: boolean,
 }
 
 export const exposedStore = setupExposeStore<Store>(() => [])

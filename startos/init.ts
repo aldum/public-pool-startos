@@ -30,7 +30,10 @@ export const { packageInit, packageUninit, containerInit } = sdk.setupInit(
   {
     STRATUM_URL: defaultStratUrl,
     AUTH: undefined,
-    USERPASS: undefined
+    USERPASS: undefined,
+    POOL_ID: 'Public Pool',
+    RPC_TIMEOUT: 25000,
+    ZMQ_ENABLED: false,
   },
   exposedStore,
 )
