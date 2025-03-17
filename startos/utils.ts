@@ -34,3 +34,11 @@ export async function isStratumUrlSet(effects: Effects): Promise<Boolean> {
   return storedURL !== '' &&
     storedURL != defaultStratUrl
 }
+
+export function randomPassword() {
+  return {
+    // charset: 'a-z,A-Z,1-9,!,@,$,%,&,*',
+    charset: 'a-z,A-Z,1-9',
+    len: 22,
+  }
+}

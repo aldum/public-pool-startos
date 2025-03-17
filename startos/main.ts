@@ -1,17 +1,22 @@
 import { sdk } from "./sdk"
 import { apiPort, rpcPort, stratPort, uiPort } from "./utils"
 import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
-import { ppEnv } from "./file-models/pubPoolEnv"
+import { baseEnv } from "./file-models/pubPoolEnv"
 import { HealthCheck } from "@start9labs/start-sdk/package/lib/health/HealthCheck"
+import { setAuth } from "./actions/set-auth"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
+  const auth = await sdk.store.getOwn(effects, sdk.StorePath.AUTH).const()
+  if (!auth) {
+    sdk.action.requestOwn(effects, setAuth, 'critical')
+  }
   console.info(
     "━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Starting Public Pool ━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
   )
 
   const healthChecks: HealthCheck[] = []
 
-  const pubpoolEnv: ppEnv = {
+  const baseEnv: baseEnv = {
     BITCOIN_RPC_URL: "http://bitcoind.startos",
     BITCOIN_RPC_PORT: rpcPort.toString(),
     BITCOIN_RPC_TIMEOUT: "25000",
@@ -21,8 +26,25 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     API_SECURE: "false",
     ENABLE_SOLO: "true",
     ENABLE_PROXY: "false",
-    BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie",
   }
+  const pubpoolEnv = await (async () => {
+    switch (auth) {
+      case 'COOKIE':
+        return { ...baseEnv, BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie" }
+      case 'USERPASS':
+        const upw = await sdk.store
+          .getOwn(effects, sdk.StorePath.USERPASS)
+          .const()
+        if (upw) {
+          const { USER, PASSWORD } = upw
+          return {
+            ...baseEnv,
+            BITCOIN_RPC_USER: USER,
+            BITCOIN_RPC_PASSWORD: PASSWORD,
+          }
+        }
+    }
+  })()
 
   const backend = await sdk.SubContainer.of(effects,
     { imageId: "backend" },

@@ -1,5 +1,4 @@
 
-export type ppEnv = {
   BITCOIN_RPC_URL: "http://bitcoind.startos"
   BITCOIN_RPC_PORT: "8332"
   BITCOIN_RPC_TIMEOUT: string
@@ -9,5 +8,11 @@ export type ppEnv = {
   API_SECURE: "false"
   ENABLE_SOLO: "true"
   ENABLE_PROXY: "false"
-  BITCOIN_RPC_COOKIEFILE: string
+}
+
+export type pubpoolENv = baseEnv & {
+  BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie"
+} | baseEnv & {
+  BITCOIN_RPC_USER: string,
+  BITCOIN_RPC_PASSWORD: string,
 }
