@@ -47,8 +47,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   }
   const pubpoolEnv = await (async () => {
     switch (auth) {
-      case 'COOKIE':
-        return { ...baseEnv, BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie" }
       case 'USERPASS':
         const upw = await sdk.store
           .getOwn(effects, sdk.StorePath.USERPASS)
@@ -60,6 +58,11 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
             BITCOIN_RPC_USER: USER,
             BITCOIN_RPC_PASSWORD: PASSWORD,
           }
+        }
+      default:
+        return {
+          ...baseEnv,
+          BITCOIN_RPC_COOKIEFILE: "/btcd/.cookie"
         }
     }
   })()
