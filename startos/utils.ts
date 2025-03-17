@@ -20,8 +20,6 @@ export async function getInterfaceUrls(
 ): Promise<string[]> {
   const netInterface = await sdk.serviceInterface.getOwn(effects, id).const()
 
-  console.info("getInterfaceUrls", JSON.stringify(netInterface))
-
   return netInterface?.addressInfo?.urls || []
 }
 
