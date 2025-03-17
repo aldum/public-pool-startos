@@ -1,14 +1,19 @@
 import { sdk } from "./sdk"
 import { apiPort, rpcPort, stratPort, uiPort } from "./utils"
-import { manifest as btcManifest } from "bitcoind-startos/startos/manifest"
 import { baseEnv } from "./file-models/pubPoolEnv"
-import { HealthCheck } from "@start9labs/start-sdk/package/lib/health/HealthCheck"
-import { request as authRequest, getAuth } from "./actions/set-auth"
-import { requestIfUnset as urlCondRequest } from "./actions/set-stratum-url"
+import { HealthCheck } from
+  "@start9labs/start-sdk/package/lib/health/HealthCheck"
+import { request as authRequest, getAuth }
+  from "./actions/set-auth"
+import { requestIfUnset as urlCondRequest }
+  from "./actions/set-stratum-url"
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
+  const decor_line = " ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ "
   console.info(
-    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Starting Public Pool ━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+    decor_line +
+    "Starting Public Pool" +
+    decor_line,
   )
 
   const healthChecks: HealthCheck[] = []
