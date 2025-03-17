@@ -103,9 +103,10 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     mounts: sdk.Mounts.of(),
     ready: {
       display: "Stratum Interface",
+      gracePeriod: 15000,
       fn: () =>
         sdk.healthCheck.checkPortListening(effects, stratPort, {
-          successMessage: "Stratum is ready",
+          successMessage: "",
           errorMessage:
             "Stratum is experiencing an issue. Please check the logs.",
         }),
@@ -122,11 +123,12 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     ready: {
       display: "Web Interface",
       fn: () =>
-        sdk.healthCheck.checkPortListening(effects, uiPort, {
-          successMessage: "UI is ready",
-          errorMessage:
-            "Server is experiencing an issue. Please check the logs.",
-        }),
+        sdk.healthCheck.checkWebUrl(effects,
+          `http://public-pool.startos:${uiPort}/api/info`,
+          {
+            successMessage: "",
+          }
+        )
     },
     requires: ["backend"],
   })
