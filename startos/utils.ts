@@ -6,6 +6,8 @@ export const stratPort = 3333
 export const defaultStratUrl = `localhost:${stratPort}`
 export const apiPort = 3334
 export const apiURL = `backend.public-pool.startos:${apiPort}`
+// btc
+export const rpcPort = 8332
 // frontend
 export const uiPort = 80
 
